@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":302:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:4:{s:47:"Rudra\Controller\Tests\ControllerTest::testInit";d:0.003;s:47:"Rudra\Controller\Tests\ControllerTest::testView";d:0.003;s:47:"Rudra\Controller\Tests\ControllerTest::testData";d:0.002;s:53:"Rudra\Controller\Tests\ControllerTest::testFileUpload";d:0.004;}}}

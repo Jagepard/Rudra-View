@@ -1,10 +1,10 @@
 {
-    "name"              : "rudra/controller",
+    "name"              : "rudra/view",
     "description"       : "Rudra framework",
     "type"              : "library",
     "keywords"          : [
         "rudra",
-        "controller",
+        "view",
         "mvc-pattern",
         "mvc"
     ],

@@ -9,16 +9,18 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Traits\SetApplicationContainersTrait;
+use Rudra\Container\Traits\{FacadeTrait, SetApplicationContainersTrait};
 
-class View implements ViewInterface
+class View extends AbstractView
 {
+    use FacadeTrait;
     use ViewTrait;
     use SetApplicationContainersTrait;
 
+    public static string $alias = "view";
     private array $template;
 
-    public function template(array $config): void
+    protected function template(array $config): void
     {
         switch ($config["engine"]) {
             case "native":
@@ -27,7 +29,7 @@ class View implements ViewInterface
         }
     }
 
-    public function view(string $path, array $data = []): string
+    protected function view(string $path, array $data = []): string
     {
         $path = "{$this->application()->config()->get("bp")}{$this->template["view.path"]}/"
             . str_replace('.', '/', $path) .
@@ -41,7 +43,7 @@ class View implements ViewInterface
         return ob_get_clean();
     }
 
-    public function render(string $path, array $data = [])
+    protected function render(string $path, array $data = [])
     {
         echo $this->view($path, $data);
     }

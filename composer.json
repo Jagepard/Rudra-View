@@ -1,5 +1,5 @@
 {
-    "name"              : "rudra/controller",
+    "name"              : "rudra/view",
     "description"       : "Rudra framework",
     "type"              : "library",
     "keywords"          : [
@@ -23,7 +23,7 @@
     },
     "require"           : {
         "php"               : ">=7.4",
-        "rudra/container"   : "self.version"
+        "rudra/container": "self.version"
     },
     "autoload"          : {
         "psr-4" : {

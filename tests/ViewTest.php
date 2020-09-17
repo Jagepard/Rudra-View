@@ -12,41 +12,30 @@ declare(strict_types=1);
 namespace Rudra\View\Tests;
 
 use Rudra\Container\{Application, Interfaces\ApplicationInterface};
-use Rudra\View\{View, ViewInterface};
+use Rudra\View\View;
 use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 
 class ViewTest extends PHPUnit_Framework_TestCase
 {
-
-    protected ApplicationInterface $application;
-    protected ViewInterface $controller;
-
     protected function setUp(): void
     {
-        $_FILES = [
-            "upload" =>
-                ["name"     => ["img" => "demo.png"],
-                 "type"     => ["img" => "image/png"],
-                 "tmp_name" => ["img" => "/tmp/phpiQuDkR"],
-                 "error"    => ["img" => 0],
-                 "size"     => ["img" => 9584],
-                ]
-        ];
-
-        $_POST = [
-            "img"   => "http://example.com/images/img.png",
-            'image' => "http://example.com/images/image.png",
-        ];
-
-        $this->application = Application::run();
-        $this->application->config()->set([
-            "bp"  => dirname(__DIR__) . '/',
-            "env" => "development",
+        Application::run()->config()->set([
+            "bp"  => dirname(__DIR__) . '/'
         ]);
 
-        $this->application->binding()->set([ApplicationInterface::class => Application::run()]);
-        $this->controller = new View($this->application);
-        $this->controller->template([
+        Application::run()->setServices(
+            [
+                "contracts" => [
+                    ApplicationInterface::class => Application::run(),
+                ],
+
+                "services" => [
+                    View::$alias => View::class,
+                ],
+            ]
+        );
+
+        View::template([
             "engine"         => "native",
             "view.path"      => "app/resources/tmpl",
             "file.extension" => "tmpl.php"
@@ -58,6 +47,6 @@ class ViewTest extends PHPUnit_Framework_TestCase
      */
     public function testView()
     {
-        $this->assertEquals('"Hello World!!!"', $this->controller->view("index", ["title" => "title"]));
+        $this->assertEquals('"Hello World!!!"', View::view("index", ["title" => "title"]));
     }
 }

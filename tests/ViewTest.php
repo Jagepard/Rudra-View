@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Rudra\View\Tests;
 
-use Rudra\Container\{Application, Interfaces\ApplicationInterface};
+use Rudra\Container\{Abstracts\AbstractApplication, Rudra};
 use Rudra\View\View;
 use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 
@@ -19,19 +19,19 @@ class ViewTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp(): void
     {
-        Application::run()->config()->set([
-            "bp"  => dirname(__DIR__) . '/'
-        ]);
-
-        Application::run()->setServices(
+        Rudra::setServices(
             [
                 "contracts" => [
-                    ApplicationInterface::class => Application::run(),
+                    AbstractApplication::class => Rudra::run(),
                 ],
 
                 "services" => [
-                    View::$alias => View::class,
+                    View::class => View::class,
                 ],
+
+                "config" => [
+                    "bp"  => dirname(__DIR__) . '/'
+                ]
             ]
         );
 

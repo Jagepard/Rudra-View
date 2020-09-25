@@ -9,15 +9,14 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Traits\{FacadeTrait, SetApplicationContainersTrait};
+use Rudra\Container\Traits\{FacadeTrait, SetRudraContainersTrait};
 
 class View extends AbstractView
 {
     use FacadeTrait;
     use ViewTrait;
-    use SetApplicationContainersTrait;
+    use SetRudraContainersTrait;
 
-    public static string $alias = "view";
     private array $template;
 
     protected function template(array $config): void
@@ -31,7 +30,7 @@ class View extends AbstractView
 
     protected function view(string $path, array $data = []): string
     {
-        $path = "{$this->application()->config()->get("bp")}{$this->template["view.path"]}/"
+        $path = $this->rudra()->config()->get("bp") . "{$this->template["view.path"]}/"
             . str_replace('.', '/', $path) .
             ".{$this->template["file.extension"]}";
 

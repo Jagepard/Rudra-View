@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Interfaces\ApplicationInterface;
+use Rudra\Container\Abstracts\AbstractApplication;
+use Rudra\Container\Request;
 
 trait ViewTrait
 {
@@ -37,17 +38,17 @@ trait ViewTrait
 
     public function fileUpload($key, $path)
     {
-        if ($this->application()->request()->files()->isLoaded($key)) {
+        if ($this->rudra()->request()->files()->isLoaded($key)) {
             $uploadedFile = "/uploaded/" . substr(md5(microtime()), 0, 5)
-                . $this->application()->request()->files()->getLoaded($key, "name");
+                . $this->rudra()->request()->files()->getLoaded($key, "name");
             $uploadPath   = $path . $uploadedFile;
-            move_uploaded_file($this->application()->request()->files()->getLoaded($key, "tmp_name"), $uploadPath);
+            move_uploaded_file($this->rudra()->request()->files()->getLoaded($key, "tmp_name"), $uploadPath);
 
-            return APP_URL . $uploadedFile;
+            return $this->rudra()->config()->get("bp") . $uploadedFile;
         }
 
-        return $this->application()->request()->post()->get($key);
+        return $this->rudra()->request()->post()->get($key);
     }
 
-    abstract public function application(): ApplicationInterface;
+    abstract public function rudra(): AbstractApplication;
 }

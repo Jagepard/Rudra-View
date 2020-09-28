@@ -30,6 +30,10 @@ class View extends AbstractView
 
     protected function view(string $path, array $data = []): string
     {
+        if (!$this->rudra()->config()->has("bp")) {
+            throw new \InvalidArgumentException("bp does not exist in config");
+        }
+
         $path = $this->rudra()->config()->get("bp") . "{$this->template["view.path"]}/"
             . str_replace('.', '/', $path) .
             ".{$this->template["file.extension"]}";

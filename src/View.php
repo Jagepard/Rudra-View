@@ -11,7 +11,7 @@ namespace Rudra\View;
 
 use Rudra\Container\Traits\{FacadeTrait, SetRudraContainersTrait};
 
-class View extends AbstractView
+class View implements ViewInterface
 {
     use FacadeTrait;
     use ViewTrait;
@@ -19,7 +19,7 @@ class View extends AbstractView
 
     private array $template;
 
-    protected function template(array $config): void
+    public function template(array $config): void
     {
         switch ($config["engine"]) {
             case "native":
@@ -28,7 +28,7 @@ class View extends AbstractView
         }
     }
 
-    protected function view(string $path, array $data = []): string
+    public function view(string $path, array $data = []): string
     {
         if (!$this->rudra()->config()->has("bp")) {
             throw new \InvalidArgumentException("bp does not exist in config");
@@ -46,7 +46,7 @@ class View extends AbstractView
         return ob_get_clean();
     }
 
-    protected function render(string $path, array $data = [])
+    public function render(string $path, array $data = [])
     {
         echo $this->view($path, $data);
     }

@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Rudra\View\Tests;
 
-use Rudra\Container\{Abstracts\AbstractApplication, Rudra};
-use Rudra\View\View;
+use Rudra\Container\{Facades\RudraFacade as Rudra, Interfaces\RudraInterface};
+use Rudra\View\ViewFacade as View;
 use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 
 class ViewTest extends PHPUnit_Framework_TestCase
@@ -22,7 +22,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
         Rudra::setServices(
             [
                 "contracts" => [
-                    AbstractApplication::class => Rudra::run(),
+                    RudraInterface::class => Rudra::run(),
                 ],
 
                 "services" => [

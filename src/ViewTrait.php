@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Abstracts\AbstractApplication;
 use Rudra\Container\Request;
 
 trait ViewTrait
@@ -49,6 +48,4 @@ trait ViewTrait
 
         return $this->rudra()->request()->post()->get($key);
     }
-
-    abstract public function rudra(): AbstractApplication;
 }

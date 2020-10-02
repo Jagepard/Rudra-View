@@ -9,11 +9,10 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Traits\{FacadeTrait, SetRudraContainersTrait};
+use Rudra\Container\Traits\SetRudraContainersTrait;
 
 class View implements ViewInterface
 {
-    use FacadeTrait;
     use ViewTrait;
     use SetRudraContainersTrait;
 
@@ -31,7 +30,7 @@ class View implements ViewInterface
     public function view(string $path, array $data = []): string
     {
         if (!$this->rudra()->config()->has("bp")) {
-            throw new \InvalidArgumentException("bp does not exist in config");
+            throw new \InvalidArgumentException("'bp' does not exist in config");
         }
 
         $path = $this->rudra()->config()->get("bp") . "{$this->template["view.path"]}/"

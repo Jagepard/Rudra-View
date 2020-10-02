@@ -17,9 +17,16 @@ class View implements ViewInterface
     use SetRudraContainersTrait;
 
     private array $template;
+    private string $basePath;
 
-    public function template(array $config): void
+    public function setup(array $config): void
     {
+        if (!array_key_exists("base.path", $config)) {
+            throw new \InvalidArgumentException("'base.path' does not exist in config");
+        }
+
+        $this->basePath = $config["base.path"];
+
         switch ($config["engine"]) {
             case "native":
                 $this->template = $config;
@@ -29,13 +36,8 @@ class View implements ViewInterface
 
     public function view(string $path, array $data = []): string
     {
-        if (!$this->rudra()->config()->has("bp")) {
-            throw new \InvalidArgumentException("'bp' does not exist in config");
-        }
-
-        $path = $this->rudra()->config()->get("bp") . "{$this->template["view.path"]}/"
-            . str_replace('.', '/', $path) .
-            ".{$this->template["file.extension"]}";
+        $path = $this->basePath . $this->template["view.path"] . '/'
+            . str_replace('.', '/', $path) . '.' . $this->template["file.extension"];
 
         ob_start();
 

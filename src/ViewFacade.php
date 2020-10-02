@@ -11,6 +11,13 @@ namespace Rudra\View;
 
 use Rudra\Container\Traits\FacadeTrait;
 
+/**
+ * @method static void template(array $config)
+ * @method static string view(string $path, array $data = [])
+ * @method static render(string $path, array $data = [])
+ *
+ * @see View
+ */
 final class ViewFacade
 {
     use FacadeTrait;

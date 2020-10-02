@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Rudra\View\Tests;
 
-use Rudra\Container\{Facades\RudraFacade as Rudra, Interfaces\RudraInterface};
+use Rudra\Container\{Container, Facades\Rudra, Interfaces\RudraInterface};
 use Rudra\View\ViewFacade as View;
 use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 
@@ -19,6 +19,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp(): void
     {
+        Rudra::set(["config", new Container(["bp"  => dirname(__DIR__) . '/'])]);
         Rudra::setServices(
             [
                 "contracts" => [
@@ -27,10 +28,6 @@ class ViewTest extends PHPUnit_Framework_TestCase
 
                 "services" => [
                     View::class => View::class,
-                ],
-
-                "config" => [
-                    "bp"  => dirname(__DIR__) . '/'
                 ]
             ]
         );

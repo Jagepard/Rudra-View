@@ -19,7 +19,6 @@ class ViewTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp(): void
     {
-        Rudra::set(["config", new Container(["bp"  => dirname(__DIR__) . '/'])]);
         Rudra::setServices(
             [
                 "contracts" => [
@@ -32,7 +31,8 @@ class ViewTest extends PHPUnit_Framework_TestCase
             ]
         );
 
-        View::template([
+        View::setup([
+            "base.path"      => dirname(__DIR__) . '/',
             "engine"         => "native",
             "view.path"      => "app/resources/tmpl",
             "file.extension" => "tmpl.php"

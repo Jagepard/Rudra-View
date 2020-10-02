@@ -9,7 +9,7 @@ namespace Rudra\View;
 
 interface ViewInterface
 {
-    public function template(array $config): void;
+    public function setup(array $config): void;
     public function view(string $path, array $data = []): string;
     public function render(string $path, array $data = []);
 }

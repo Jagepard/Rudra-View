@@ -19,17 +19,8 @@ class ViewTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp(): void
     {
-        Rudra::setServices(
-            [
-                "contracts" => [
-                    RudraInterface::class => Rudra::run(),
-                ],
-
-                "services" => [
-                    View::class => View::class,
-                ]
-            ]
-        );
+        Rudra::binding([RudraInterface::class => Rudra::run(),]);
+        Rudra::services([View::class => View::class]);
 
         View::setup([
             "base.path"      => dirname(__DIR__) . '/',

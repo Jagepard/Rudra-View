@@ -42,7 +42,7 @@ class View implements ViewInterface
         ob_start();
 
         if (count($data)) extract($data, EXTR_REFS);
-        if (file_exists($path)) require_once $path;
+        if (file_exists($path)) require $path;
 
         return ob_get_clean();
     }

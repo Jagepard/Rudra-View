@@ -13,10 +13,9 @@ use Rudra\Container\Traits\SetRudraContainersTrait;
 
 class View implements ViewInterface
 {
-    use ViewTrait;
     use SetRudraContainersTrait;
 
-    private array $template;
+    private array $config;
     private string $basePath;
 
     public function setup(array $config): void
@@ -29,15 +28,15 @@ class View implements ViewInterface
 
         switch ($config["engine"]) {
             case "native":
-                $this->template = $config;
+                $this->config = $config;
                 break;
         }
     }
 
     public function view(string $path, array $data = []): string
     {
-        $path = $this->basePath . $this->template["view.path"] . '/'
-            . str_replace('.', '/', $path) . '.' . $this->template["file.extension"];
+        $path = $this->basePath . $this->config["view.path"] . '/'
+            . str_replace('.', '/', $path) . '.' . $this->config["file.extension"];
 
         ob_start();
 

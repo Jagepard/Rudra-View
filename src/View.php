@@ -46,8 +46,27 @@ class View implements ViewInterface
         return ob_get_clean();
     }
 
-    public function render(string $path, array $data = [])
+    public function render($path, array $data = [])
     {
+        if (is_array($path)) {
+            $cachePath = $this->basePath . $this->config["cache.path"] . '/'
+                . str_replace('.', '/', $path[1]) . '.' . $this->config["file.extension"];
+
+            $cacheTime = $path[2] ?? $this->rudra()->config()->get('cache.time');
+
+            if (file_exists($cachePath) && (strtotime($cacheTime, filemtime($cachePath)) > time())) {
+                echo file_get_contents($cachePath);
+                return;
+            }
+
+            $output = $this->view($path[0], $data);
+
+            file_put_contents($cachePath, $output);
+
+            echo $output;
+            return;
+        }
+
         echo $this->view($path, $data);
     }
 }

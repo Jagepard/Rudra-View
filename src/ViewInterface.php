@@ -12,4 +12,5 @@ interface ViewInterface
     public function setup(array $config): void;
     public function view(string $path, array $data = []): string;
     public function render($path, array $data = []);
+    public function cache(array $path);
 }

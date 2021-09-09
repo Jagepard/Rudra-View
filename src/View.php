@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Traits\SetRudraContainersTrait;
+use Rudra\Container\Facades\Rudra;
 
 class View implements ViewInterface
 {
-    use SetRudraContainersTrait;
-
     private array $config;
     private string $basePath;
 
@@ -66,7 +64,7 @@ class View implements ViewInterface
         $cachePath = $this->basePath . $this->config["cache.path"] . '/'
             . str_replace('.', '/', $path[0]) . '.' . $this->config["file.extension"];
 
-        $cacheTime = $path[1] ?? $this->rudra()->config()->get('cache.time');
+        $cacheTime = $path[1] ?? Rudra::config()->get('cache.time');
 
         if (file_exists($cachePath) && (strtotime($cacheTime, filemtime($cachePath)) > time())) {
             echo file_get_contents($cachePath);

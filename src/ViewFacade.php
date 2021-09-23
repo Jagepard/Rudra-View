@@ -13,9 +13,9 @@ use Rudra\Container\Traits\FacadeTrait;
 
 /**
  * @method static void setup(array $config)
- * @method static string view(string $path, array $data = [])
+ * @method static string view($path, array $data = [])
  * @method static render($path, array $data = [])
- * @method static cache(array $path)
+ * @method static cache(array $path, $fullPage = true)
  *
  * @see View
  */

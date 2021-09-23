@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Facades\Rudra;
+use Rudra\Container\Traits\SetRudraContainersTrait;
 
 class View implements ViewInterface
 {
+    use SetRudraContainersTrait;
+
     private array $config;
     private string $basePath;
 
@@ -31,8 +33,23 @@ class View implements ViewInterface
         }
     }
 
-    public function view(string $path, array $data = []): string
+    public function view($path, array $data = [])
     {
+        if (is_array($path)) {
+            $cache = $this->cache($path[1], false);
+
+            if (!empty($cache)) {
+                return $cache;
+            }
+
+            $output = $this->view($path[0], $data);
+            $cachePath = $this->basePath . $this->config["cache.path"] . '/'
+                . str_replace('.', '/', $path[1][0]) . '.' . $this->config["file.extension"];
+
+            file_put_contents($cachePath, $output);
+            return $output;
+        }
+
         $path = $this->basePath . $this->config["view.path"] . '/'
             . str_replace('.', '/', $path) . '.' . $this->config["file.extension"];
 
@@ -59,16 +76,20 @@ class View implements ViewInterface
         echo $this->view($path, $data);
     }
 
-    public function cache(array $path)
+    public function cache(array $path, $fullPage = true)
     {
         $cachePath = $this->basePath . $this->config["cache.path"] . '/'
             . str_replace('.', '/', $path[0]) . '.' . $this->config["file.extension"];
 
-        $cacheTime = $path[1] ?? Rudra::config()->get('cache.time');
+        $cacheTime = $path[1] ?? $this->rudra()->config()->get('cache.time');
 
         if (file_exists($cachePath) && (strtotime($cacheTime, filemtime($cachePath)) > time())) {
-            echo file_get_contents($cachePath);
-            exit();
+            if ($fullPage) {
+                echo file_get_contents($cachePath);
+                exit();
+            }
+
+            return file_get_contents($cachePath);
         }
     }
 }

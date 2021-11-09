@@ -36,15 +36,9 @@ class View implements ViewInterface
     public function view($path, array $data = [])
     {
         if (is_array($path)) {
-            $cache = $this->cache($path[1], false);
-
-            if (!empty($cache)) {
-                return $cache;
-            }
-
             $output = $this->view($path[0], $data);
             $cachePath = $this->basePath . $this->config["cache.path"] . '/'
-                . str_replace('.', '/', $path[1][0]) . '.' . $this->config["file.extension"];
+                . str_replace('.', '/', $path[1]) . '.' . $this->config["file.extension"];
 
             file_put_contents($cachePath, $output);
             return $output;
@@ -76,7 +70,7 @@ class View implements ViewInterface
         echo $this->view($path, $data);
     }
 
-    public function cache(array $path, $fullPage = true)
+    public function cache(array $path, $fullPage = false)
     {
         $cachePath = $this->basePath . $this->config["cache.path"] . '/'
             . str_replace('.', '/', $path[0]) . '.' . $this->config["file.extension"];

@@ -20,7 +20,7 @@ if (!function_exists('render')) {
      * @param array $data
      * @return string
      */
-    function render($path, array $data = []): string
+    function render($path, array $data = [])
     {
         return View::render($path, $data);
     }

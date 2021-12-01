@@ -25,3 +25,15 @@ if (!function_exists('render')) {
         return View::render($path, $data);
     }
 }
+
+if (!function_exists('cache')) {
+    /**
+     * @param array $path
+     * @param false $fullPage
+     * @return mixed
+     */
+    function cache(array $path, $fullPage = false)
+    {
+        return View::cache($path, $fullPage);
+    }
+}

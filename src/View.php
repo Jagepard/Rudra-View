@@ -37,15 +37,15 @@ class View implements ViewInterface
     {
         if (is_array($path)) {
             $output = $this->view($path[0], $data);
-            $cachePath = $this->basePath . $this->config["cache.path"] . '/'
-                . str_replace('.', '/', $path[1]) . '.' . $this->config["file.extension"];
+            $cachePath = $this->basePath . $this->config["cache.path"] . DIRECTORY_SEPARATOR
+                . str_replace('.', DIRECTORY_SEPARATOR, $path[1]) . '.' . $this->config["file.extension"];
 
             file_put_contents($cachePath, $output);
             return $output;
         }
 
-        $path = $this->basePath . $this->config["view.path"] . '/'
-            . str_replace('.', '/', $path) . '.' . $this->config["file.extension"];
+        $path = $this->basePath . $this->config["view.path"] . DIRECTORY_SEPARATOR
+            . str_replace('.', DIRECTORY_SEPARATOR, $path) . '.' . $this->config["file.extension"];
 
         ob_start();
 
@@ -59,8 +59,8 @@ class View implements ViewInterface
     {
         if (is_array($path)) {
             $output = $this->view($path[0], $data);
-            $cachePath = $this->basePath . $this->config["cache.path"] . '/'
-                . str_replace('.', '/', $path[1]) . '.' . $this->config["file.extension"];
+            $cachePath = $this->basePath . $this->config["cache.path"] . DIRECTORY_SEPARATOR
+                . str_replace('.', DIRECTORY_SEPARATOR, $path[1]) . '.' . $this->config["file.extension"];
 
             file_put_contents($cachePath, $output);
             echo $output;
@@ -72,8 +72,8 @@ class View implements ViewInterface
 
     public function cache(array $path, $fullPage = false)
     {
-        $cachePath = $this->basePath . $this->config["cache.path"] . '/'
-            . str_replace('.', '/', $path[0]) . '.' . $this->config["file.extension"];
+        $cachePath = $this->basePath . $this->config["cache.path"] . DIRECTORY_SEPARATOR
+            . str_replace('.', DIRECTORY_SEPARATOR, $path[0]) . '.' . $this->config["file.extension"];
 
         $cacheTime = $path[1] ?? $this->rudra()->config()->get('cache.time');
 

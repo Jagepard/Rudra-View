@@ -16,11 +16,11 @@ if (!function_exists('view')) {
 
 if (!function_exists('render')) {
     /**
-     * @param       $path
-     * @param array $data
+     * @param  $path
+     * @param  $data
      * @return string
      */
-    function render($path, array $data = [])
+    function render($path, $data = [])
     {
         return View::render($path, $data);
     }

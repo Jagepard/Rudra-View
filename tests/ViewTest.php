@@ -19,15 +19,10 @@ class ViewTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp(): void
     {
-        Rudra::binding([RudraInterface::class => Rudra::run(),]);
+        Rudra::binding([RudraInterface::class => Rudra::run()]);
         Rudra::services([View::class => View::class]);
 
-        View::setup([
-            "base.path"      => dirname(__DIR__) . '/',
-            "engine"         => "native",
-            "view.path"      => "app/resources/tmpl",
-            "file.extension" => "tmpl.php"
-        ]);
+        View::setup(dirname(__DIR__) . '/', "app/resources/tmpl");
     }
 
     /**
@@ -35,6 +30,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
      */
     public function testView()
     {
-        $this->assertEquals('"Hello World!!!"', View::view("index", ["title" => "title"]));
+        $this->assertEquals('"Hello World!!!"', View::view("index", ["name" => "World"]));
+        $this->assertEquals('"Hello John!!!"', View::view("index", ["name" => "John"]));
     }
 }

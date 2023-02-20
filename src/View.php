@@ -15,37 +15,77 @@ class View implements ViewInterface
 {
     use SetRudraContainersTrait;
 
-    private array $config;
-    private string $basePath;
+    /**
+     * Absolute path to the templates folder
+     * -------------------------------------
+     * Абсолютный путь к папке шаблонов
+     *
+     * @var string
+     */
+    private string $viewPath;
 
-    public function setup(array $config): void
+    /**
+     * Absolute path to the cache folder
+     * ---------------------------------
+     * Абсолютный путь к папке кеша
+     *
+     * @var string|null
+     */
+    private ?string $cachePath;
+
+    /**
+     * Template file extension
+     * ------------------------
+     * Расширение файла шаблона
+     *
+     * @var string
+     */
+    private string $extension;
+
+    /**
+     * Setup basic parameters
+     * -----------------------------
+     * Установка основных параметров
+     *
+     * @param  array $config
+     * @return void
+     */
+    public function setup(string $basePath, string $viewPath, ?string $cachePath = null, string $extension = "phtml"): void 
     {
-        if (!array_key_exists("base.path", $config)) {
-            throw new \InvalidArgumentException("'base.path' does not exist in config");
-        }
-
-        $this->basePath = $config["base.path"];
-
-        switch ($config["engine"]) {
-            case "native":
-                $this->config = $config;
-                break;
-        }
+        $this->viewPath  = $basePath . $viewPath;
+        $this->cachePath = $basePath . $cachePath;
+        $this->basePath  = $basePath;
+        $this->extension = $extension;
     }
 
-    public function view($path, array $data = [])
+    /**
+     * Returns the html representation from the output buffer
+     * Imports variables from the $data array into the template
+     * When passing an array:
+     *     the html view is created according to the first parameter
+     *     and cache file according to the second
+     * -------------------------------------------------------------------
+     * Возвращает html представление из буфера вывода
+     * Импортирует переменные из массива $data в шаблон
+     * При передаче массива:
+     *     создается html представление в соответствии с первым параметром 
+     *     и файл кэша в соответствии со вторым
+     * 
+     * @param  [type]       $path
+     * @param  array        $data
+     * @return string|false
+     */
+    public function view($path, array $data = []): string|false
     {
         if (is_array($path)) {
-            $output = $this->view($path[0], $data);
-            $cachePath = $this->basePath . $this->config["cache.path"] . DIRECTORY_SEPARATOR
-                . str_replace('.', DIRECTORY_SEPARATOR, $path[1]) . '.' . $this->config["file.extension"];
+            $output    = $this->view($path[0], $data);
+            $cachePath = $this->cachePath . '/'. str_replace('.', '/', $path[1]) . '.' . $this->extension;
 
             file_put_contents($cachePath, $output);
             return $output;
         }
 
-        $path = $this->basePath . $this->config["view.path"] . DIRECTORY_SEPARATOR
-            . str_replace('.', DIRECTORY_SEPARATOR, $path) . '.' . $this->config["file.extension"];
+        $path = $this->viewPath . '/'. str_replace('.', '/', $path) . '.' . $this->extension;
 
         ob_start();
 
@@ -55,26 +95,34 @@ class View implements ViewInterface
         return ob_get_clean();
     }
 
-    public function render($path, array $data = [])
+    /**
+     * Checks the cache file against the caching frequency,
+     * if the cache is out of date, then it must be updated
+     * The default caching interval time is specified in the configuration file
+     * config/setting.local.yml for local development config/setting.production.yml for public release
+     * Example: 'cache.time' => 'now',
+     * The caching interval time can be passed as the second parameter $time
+     * Example: '+1 day'
+     * The value of $fullPage true interrupts further code processing if the data in the cache file is up-to-date
+     * Example: cache('index', '+1 day', true); or cache('index', null, true);
+     * ----------------------------------------------------------------------------------------------------------
+     * Проверяет файл кэша на соответствие периодичности кэширования,
+     * если кеш устарел, то он должен быть обновлен
+     * Время периодичности кэширования по умолчанию указывается в файле конфигурации 
+     * config/setting.local.yml для локальной разработки config/setting.production.yml для публичного размещения
+     * Пример: 'cache.time' => 'now', 
+     * Время периодичности кэширования можно передать вторым элементом массива $path[1]
+     * Пример: '+1 day'
+     * Значение $fullPage true прерывает дальнейшую обработку кода в случае актуальности данных в файле кэша
+     * Пример: cache(['index', '+1 day'], true); или cache(['index'], true); // время  из конфигурвции
+     *
+     * @param  string      $path
+     * @param  boolean     $fullPage
+     * @return string|null
+     */
+    public function cache(array $path, $fullPage = false): ?string
     {
-        if (is_array($path)) {
-            $output = $this->view($path[0], $data);
-            $cachePath = $this->basePath . $this->config["cache.path"] . DIRECTORY_SEPARATOR
-                . str_replace('.', DIRECTORY_SEPARATOR, $path[1]) . '.' . $this->config["file.extension"];
-
-            file_put_contents($cachePath, $output);
-            echo $output;
-            return;
-        }
-
-        echo $this->view($path, $data);
-    }
-
-    public function cache(array $path, $fullPage = false)
-    {
-        $cachePath = $this->basePath . $this->config["cache.path"] . DIRECTORY_SEPARATOR
-            . str_replace('.', DIRECTORY_SEPARATOR, $path[0]) . '.' . $this->config["file.extension"];
-
+        $cachePath = $this->cachePath . '/' . str_replace('.', '/', $path[0]) . '.' . $this->extension;
         $cacheTime = $path[1] ?? $this->rudra()->config()->get('cache.time');
 
         if (file_exists($cachePath) && (strtotime($cacheTime, filemtime($cachePath)) > time())) {
@@ -85,5 +133,7 @@ class View implements ViewInterface
 
             return file_get_contents($cachePath);
         }
+
+        return null;
     }
 }

@@ -1,3 +1,3 @@
-![GitHub](https://img.shields.io/github/license/jagepard/Rudra-Controller.svg) 
+![GitHub](https://img.shields.io/github/license/jagepard/Rudra-View.svg) 
 
-# Rudra-View
+# Rudra-View | [API](https://github.com/Jagepard/Rudra-View/blob/master/docs.md "Documentation API")

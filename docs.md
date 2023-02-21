@@ -1,64 +1,37 @@
 ## Table of contents
 
-- [\Rudra\Controller](#class-rudracontroller)
-- [\Rudra\Interfaces\ControllerInterface (interface)](#interface-rudrainterfacescontrollerinterface)
+- [\Rudra\View\View](#class-rudraviewview)
+- [\Rudra\View\ViewFacade](#class-rudraviewviewfacade)
+- [\Rudra\View\ViewInterface (interface)](#interface-rudraviewviewinterface)
 
-<hr /><a id="class-rudracontroller"></a>
-### Class: \Rudra\Controller
-
-> Class Controller
-
-| Visibility | Function |
-|:-----------|:---------|
-| public | <strong>addData(</strong><em>mixed</em> <strong>$data</strong>, <em>\string</em> <strong>$key=null</strong>)</strong> : <em>void</em> |
-| public | <strong>after()</strong> : <em>void</em><br /><em>Метод выполняется после вызова контроллера</em> |
-| public | <strong>auth(</strong><em>\string</em> <strong>$userToken=null</strong>, <em>\string</em> <strong>$redirect=`''`</strong>)</strong> : <em>mixed</em> |
-| public | <strong>bcrypt(</strong><em>\string</em> <strong>$password</strong>, <em>\integer</em> <strong>$cost=10</strong>)</strong> : <em>bool/string</em> |
-| public | <strong>before()</strong> : <em>void</em><br /><em>Метод выполняется перед вызовом контроллера</em> |
-| public | <strong>checkCookie(</strong><em>\string</em> <strong>$redirect=`''`</strong>)</strong> : <em>void</em> |
-| public | <strong>container()</strong> : <em>mixed</em> |
-| public | <strong>csrfProtection()</strong> : <em>void</em><br /><em>CSRF protection</em> |
-| public | <strong>data(</strong><em>\string</em> <strong>$key=null</strong>)</strong> : <em>mixed</em> |
-| public | <strong>db()</strong> : <em>mixed</em> |
-| public | <strong>fileUpload(</strong><em>mixed</em> <strong>$key</strong>, <em>mixed</em> <strong>$path</strong>)</strong> : <em>array/string</em> |
-| public | <strong>getTwig()</strong> : <em>\Rudra\Twig_Environment</em> |
-| public | <strong>hasData(</strong><em>\string</em> <strong>$key</strong>, <em>\string</em> <strong>$subKey=null</strong>)</strong> : <em>bool</em> |
-| public | <strong>init(</strong><em>\Rudra\Interfaces\ContainerInterface</em> <strong>$container</strong>, <em>array</em> <strong>$config</strong>)</strong> : <em>mixed/void</em> |
-| public | <strong>login(</strong><em>\string</em> <strong>$password</strong>, <em>\string</em> <strong>$hash</strong>, <em>\string</em> <strong>$redirect=`'admin'`</strong>, <em>\string</em> <strong>$message=`'Укажите верные данные'`</strong>)</strong> : <em>void</em> |
-| public | <strong>logout(</strong><em>\string</em> <strong>$redirect=`''`</strong>)</strong> : <em>void</em> |
-| public | <strong>middleware(</strong><em>mixed</em> <strong>$middleware</strong>)</strong> : <em>void</em> |
-| public | <strong>new(</strong><em>mixed</em> <strong>$object</strong>, <em>null</em> <strong>$params=null</strong>)</strong> : <em>mixed</em> |
-| public | <strong>pagination()</strong> : <em>mixed</em> |
-| public | <strong>post(</strong><em>null</em> <strong>$key=null</strong>)</strong> : <em>mixed</em> |
-| public | <strong>redirect(</strong><em>null</em> <strong>$target=null</strong>)</strong> : <em>mixed</em> |
-| public | <strong>render(</strong><em>\string</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>void</em> |
-| public | <strong>role(</strong><em>\string</em> <strong>$role</strong>, <em>\string</em> <strong>$privilege</strong>, <em>\boolean</em> <strong>$access=false</strong>, <em>\string</em> <strong>$redirect=`''`</strong>)</strong> : <em>mixed</em> |
-| public | <strong>setData(</strong><em>mixed</em> <strong>$data</strong>, <em>\string</em> <strong>$key=null</strong>)</strong> : <em>void</em> |
-| public | <strong>setPagination(</strong><em>mixed</em> <strong>$value</strong>)</strong> : <em>void</em> |
-| public | <strong>setSession(</strong><em>\string</em> <strong>$key</strong>, <em>\string</em> <strong>$value</strong>, <em>\string</em> <strong>$subKey=null</strong>)</strong> : <em>void</em> |
-| public | <strong>setTwig(</strong><em>\Twig_Environment</em> <strong>$twig</strong>)</strong> : <em>void</em> |
-| public | <strong>template(</strong><em>array</em> <strong>$config</strong>)</strong> : <em>void</em> |
-| public | <strong>twig(</strong><em>\string</em> <strong>$template</strong>, <em>array</em> <strong>$params=array()</strong>)</strong> : <em>void</em> |
-| public | <strong>unsetSession(</strong><em>\string</em> <strong>$key</strong>, <em>\string</em> <strong>$subKey=null</strong>)</strong> : <em>void</em> |
-| public | <strong>userToken()</strong> : <em>string</em> |
-| public | <strong>validation()</strong> : <em>mixed</em> |
-| public | <strong>view(</strong><em>\string</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>string</em> |
-| protected | <strong>csrfField()</strong> : <em>void</em> |
-
-*This class implements [\Rudra\Interfaces\ControllerInterface](#interface-rudrainterfacescontrollerinterface)*
-
-<hr /><a id="interface-rudrainterfacescontrollerinterface"></a>
-### Interface: \Rudra\Interfaces\ControllerInterface
-
-> Interface ControllerInterface
+<hr /><a id="class-rudraviewview"></a>
+### Class: \Rudra\View\View
 
 | Visibility | Function |
 |:-----------|:---------|
-| public | <strong>after()</strong> : <em>void</em><br /><em>Метод выполняется после вызова контроллера</em> |
-| public | <strong>before()</strong> : <em>void</em><br /><em>Метод выполняется перед вызовом контроллера</em> |
-| public | <strong>csrfProtection()</strong> : <em>void</em><br /><em>CSRF protection</em> |
-| public | <strong>init(</strong><em>\Rudra\Interfaces\ContainerInterface</em> <strong>$container</strong>, <em>array</em> <strong>$config</strong>)</strong> : <em>mixed/void</em> |
-| public | <strong>render(</strong><em>\string</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>void</em> |
-| public | <strong>template(</strong><em>array</em> <strong>$config</strong>)</strong> : <em>void</em> |
-| public | <strong>view(</strong><em>\string</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>string</em> |
+| public | <strong>__construct(</strong><em>\Rudra\Container\Interfaces\RudraInterface</em> <strong>$rudra</strong>)</strong> : <em>void</em> |
+| public | <strong>cache(</strong><em>string/array</em> <strong>$path</strong>, <em>bool/boolean</em> <strong>$fullPage=false</strong>)</strong> : <em>string/null</em><br /><em>Checks the cache file against the caching frequency, if the cache is out of date, then it must be updated The default caching interval time is specified in the configuration file config/setting.local.yml for local development config/setting.production.yml for public release Example: 'cache.time' => 'now', The caching interval time can be passed as the second parameter $time Example: '+1 day' The value of $fullPage true interrupts further code processing if the data in the cache file is up-to-date Example: cache('index', '+1 day', true); or cache('index', null, true); ---------------------------------------------------------------------------------------------------------- Проверяет файл кэша на соответствие периодичности кэширования, если кеш устарел, то он должен быть обновлен Время периодичности кэширования по умолчанию указывается в файле конфигурации config/setting.local.yml для локальной разработки config/setting.production.yml для публичного размещения Пример: 'cache.time' => 'now', Время периодичности кэширования можно передать вторым элементом массива $path[1] Пример: '+1 day' Значение $fullPage true прерывает дальнейшую обработку кода в случае актуальности данных в файле кэша Пример: cache(['index', '+1 day'], true); или cache(['index'], true); // время  из конфигурвции</em> |
+| public | <strong>rudra()</strong> : <em>void</em> |
+| public | <strong>setup(</strong><em>\string</em> <strong>$basePath</strong>, <em>\string</em> <strong>$viewPath</strong>, <em>\string</em> <strong>$cachePath=null</strong>, <em>\string</em> <strong>$extension=`'phtml'`</strong>)</strong> : <em>void</em><br /><em>Setup basic parameters ----------------------------- Установка основных параметров</em> |
+| public | <strong>view(</strong><em>\Rudra\View\[type]</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>string/false</em><br /><em>Returns the html representation from the output buffer Imports variables from the $data array into the template When passing an array: the html view is created according to the first parameter and cache file according to the second ------------------------------------------------------------------- Возвращает html представление из буфера вывода Импортирует переменные из массива $data в шаблон При передаче массива: создается html представление в соответствии с первым параметром и файл кэша в соответствии со вторым</em> |
+
+*This class implements [\Rudra\View\ViewInterface](#interface-rudraviewviewinterface)*
+
+<hr /><a id="class-rudraviewviewfacade"></a>
+### Class: \Rudra\View\ViewFacade
+
+| Visibility | Function |
+|:-----------|:---------|
+| public static | <strong>__callStatic(</strong><em>mixed</em> <strong>$method</strong>, <em>array</em> <strong>$parameters=array()</strong>)</strong> : <em>void</em> |
+| public static | <strong>render(</strong><em>\Rudra\View\[type]</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>void</em><br /><em>Displays template ----------------- Отображает шаблон</em> |
+
+<hr /><a id="interface-rudraviewviewinterface"></a>
+### Interface: \Rudra\View\ViewInterface
+
+| Visibility | Function |
+|:-----------|:---------|
+| public | <strong>cache(</strong><em>string/array</em> <strong>$path</strong>, <em>bool/boolean</em> <strong>$fullPage=false</strong>)</strong> : <em>string/null</em><br /><em>Checks the cache file against the caching frequency, if the cache is out of date, then it must be updated The default caching interval time is specified in the configuration file config/setting.local.yml for local development config/setting.production.yml for public release Example: 'cache.time' => 'now', The caching interval time can be passed as the second parameter $time Example: '+1 day' The value of $fullPage true interrupts further code processing if the data in the cache file is up-to-date Example: cache('index', '+1 day', true); or cache('index', null, true); ---------------------------------------------------------------------------------------------------------- Проверяет файл кэша на соответствие периодичности кэширования, если кеш устарел, то он должен быть обновлен Время периодичности кэширования по умолчанию указывается в файле конфигурации config/setting.local.yml для локальной разработки config/setting.production.yml для публичного размещения Пример: 'cache.time' => 'now', Время периодичности кэширования можно передать вторым элементом массива $path[1] Пример: '+1 day' Значение $fullPage true прерывает дальнейшую обработку кода в случае актуальности данных в файле кэша Пример: cache(['index', '+1 day'], true); или cache(['index'], true); // время  из конфигурвции</em> |
+| public | <strong>rudra()</strong> : <em>\Rudra\Container\Interfaces\RudraInterface</em><br /><em>Service and Configuration Container ----------------------------------- Контейнер сервисов и конфигураций</em> |
+| public | <strong>setup(</strong><em>\string</em> <strong>$basePath</strong>, <em>\string</em> <strong>$viewPath</strong>, <em>\string</em> <strong>$cachePath</strong>, <em>\string</em> <strong>$extension=`'phtml'`</strong>)</strong> : <em>void</em><br /><em>Setup basic parameters ----------------------------- Установка основных параметров</em> |
+| public | <strong>view(</strong><em>\Rudra\View\[type]</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>string/false</em><br /><em>Returns the html representation from the output buffer Imports variables from the $data array into the template When passing an array: the html view is created according to the first parameter and cache file according to the second ------------------------------------------------------------------- Возвращает html представление из буфера вывода Импортирует переменные из массива $data в шаблон При передаче массива: создается html представление в соответствии с первым параметром и файл кэша в соответствии со вторым</em> |
 

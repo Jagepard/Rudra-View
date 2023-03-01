@@ -1,41 +1,40 @@
 ## Table of contents
+- [Rudra\View\View](#rudra_view_view)
+- [Rudra\View\ViewFacade](#rudra_view_viewfacade)
+- [Rudra\View\ViewInterface](#rudra_view_viewinterface)
+<hr>
 
-- [\Rudra\View\View](#class-rudraviewview)
-- [\Rudra\View\ViewFacade](#class-rudraviewviewfacade)
-- [\Rudra\View\ViewInterface (interface)](#interface-rudraviewviewinterface)
+<a id="rudra_view_view"></a>
 
-<hr />
-<a id="class-rudraviewview"></a>
-
-### Class: \Rudra\View\View
-
+### Class: Rudra\View\View
+##### implements [Rudra\View\ViewInterface](#rudra_view_viewinterface)
 | Visibility | Function |
 |:-----------|:---------|
-| public | <strong>__construct(</strong><em>\Rudra\Container\Interfaces\RudraInterface</em> <strong>$rudra</strong>)</strong> : <em>void</em> |
-| public | <br><strong>cache(</strong><em>string/array</em> <strong>$path</strong>, <em>bool/boolean</em> <strong>$fullPage=false</strong>)</strong> : <em>string/null</em><hr /><em>Checks the cache file against the caching frequency, if the cache is out of date, then it must be updated <br />The default caching interval time is specified in the configuration file `config/setting.local.yml` for local development `config/setting.production.yml` for public release. Example: `'cache.time' => 'now'` <br>The caching interval time can be passed as the second parameter `$time`. Example: `'+1 day'` <br> The value of `$fullPage = true` interrupts further code processing if the data in the cache file is up-to-date <br> Example: `cache('index', '+1 day', true);` or `cache('index', null, true);` <hr /> Проверяет файл кэша на соответствие периодичности кэширования, если кеш устарел, то он должен быть обновлен Время периодичности кэширования по умолчанию указывается в файле конфигурации `config/setting.local.yml` для локальной разработки `config/setting.production.yml` для публичного размещения <br>Пример: `'cache.time' => 'now'` <br> Время периодичности кэширования можно передать вторым элементом массива `$path[1]` Пример: `'+1 day'` Значение `$fullPage = true` прерывает дальнейшую обработку кода в случае актуальности данных в файле кэша <br>Пример: `cache(['index', '+1 day'], true);` или `cache(['index'], true);` // время  из конфигурвции</em>|
-| public | <strong>rudra()</strong> : <em>void</em> |
-| public | <br><strong>setup(</strong><em>\string</em> <strong>$basePath</strong>, <em>\string</em> <strong>$viewPath</strong>, <em>\string</em> <strong>$cachePath=null</strong>, <em>\string</em> <strong>$extension='phtml'</strong>)</strong> : <em>void</em><hr /><em>Setup basic parameters <hr> Установка основных параметров</em>|
-| public | <br><strong>view(</strong><em>\Rudra\View\[type]</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>string/false</em><hr /><em>Returns the html representation from the output buffer Imports variables from the `$data` array into the template When passing an array: the html view is created according to the first parameter and cache file according to the second <hr> Возвращает html представление из буфера вывода Импортирует переменные из массива `$data` в шаблон При передаче массива: создается html представление в соответствии с первым параметром и файл кэша в соответствии со вторым</em> |
+|public|<em><strong>setup</strong>( string $basePath  string $viewPath  ?string $cachePath  string $extension ): void</em><br>Setup basic parameters<br>Установка основных параметров|
+|public|<em><strong>view</strong>(  $path  array $data ): string|false</em><br>Returns the html representation from the output buffer<br>Imports variables from the $data array into the template<br>When passing an array:<br>the html view is created according to the first parameter<br>and cache file according to the second<br>Возвращает html представление из буфера вывода<br>Импортирует переменные из массива $data в шаблон<br>При передаче массива:<br>создается html представление в соответствии с первым параметром <br>и файл кэша в соответствии со вторым|
+|public|<em><strong>cache</strong>( array $path   $fullPage ): ?string</em><br>Checks the cache file against the caching frequency,<br>if the cache is out of date, then it must be updated<br>The default caching interval time is specified in the configuration file<br>config/setting.local.yml for local development config/setting.production.yml for public release<br>Example: 'cache.time' => 'now',<br>The caching interval time can be passed as the second parameter $time<br>Example: '+1 day'<br>The value of $fullPage true interrupts further code processing if the data in the cache file is uptodate<br>Example: cache('index', '+1 day', true); or cache('index', null, true);<br>Проверяет файл кэша на соответствие периодичности кэширования,<br>если кеш устарел, то он должен быть обновлен<br>Время периодичности кэширования по умолчанию указывается в файле конфигурации <br>config/setting.local.yml для локальной разработки config/setting.production.yml для публичного размещения<br>Пример: 'cache.time' => 'now', <br>Время периодичности кэширования можно передать вторым элементом массива $path[1]<br>Пример: '+1 day'<br>Значение $fullPage true прерывает дальнейшую обработку кода в случае актуальности данных в файле кэша<br>Пример: cache(['index', '+1 day'], true); или cache(['index'], true); // времяиз конфигурвции|
+|public|<em><strong>__construct</strong>( Rudra\Container\Interfaces\RudraInterface $rudra )</em><br>|
+|public|<em><strong>rudra</strong>(): Rudra\Container\Interfaces\RudraInterface</em><br>|
 
-*This class implements [\Rudra\View\ViewInterface](#interface-rudraviewviewinterface)*
 
-<hr /><a id="class-rudraviewviewfacade"></a>
+<a id="rudra_view_viewfacade"></a>
 
-### Class: \Rudra\View\ViewFacade
-
+### Class: Rudra\View\ViewFacade
 | Visibility | Function |
 |:-----------|:---------|
-| public static | <strong>__callStatic(</strong><em>mixed</em> <strong>$method</strong>, <em>array</em> <strong>$parameters=array()</strong>)</strong> : <em>void</em> |
-| public static | <br><strong>render(</strong><em>\Rudra\View\[type]</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>void</em><hr /><em>Displays template <hr> Отображает шаблон</em> |
+|public static|<em><strong>render</strong>(  $path  array $data ): void</em><br>Displays template<br>Отображает шаблон|
+|public static|<em><strong>__callStatic</strong>(  $method   $parameters )</em><br>|
 
-<hr /><a id="interface-rudraviewviewinterface"></a>
 
-### Interface: \Rudra\View\ViewInterface
+<a id="rudra_view_viewinterface"></a>
 
+### Class: Rudra\View\ViewInterface
 | Visibility | Function |
 |:-----------|:---------|
-| public | <strong>cache(</strong><em>string/array</em> <strong>$path</strong>, <em>bool/boolean</em> <strong>$fullPage=false</strong>)</strong> : <em>string/null</em> |
-| public | <strong>rudra()</strong> : <em>\Rudra\Container\Interfaces\RudraInterface</em>|
-| public | <strong>setup(</strong><em>\string</em> <strong>$basePath</strong>, <em>\string</em> <strong>$viewPath</strong>, <em>\string</em> <strong>$cachePath</strong>, <em>\string</em> <strong>$extension='phtml'</strong>)</strong> : <em>void</em> |
-| public | <strong>view(</strong><em>\Rudra\View\[type]</em> <strong>$path</strong>, <em>array</em> <strong>$data=array()</strong>)</strong> : <em>string/false</em> |
+|abstract public|<em><strong>setup</strong>( string $basePath  string $viewPath  ?string $cachePath  string $extension ): void</em><br>Setup basic parameters<br>Установка основных параметров|
+|abstract public|<em><strong>view</strong>(  $path  array $data ): string|false</em><br>Returns the html representation from the output buffer<br>Imports variables from the $data array into the template<br>When passing an array:<br>the html view is created according to the first parameter<br>and cache file according to the second<br>Возвращает html представление из буфера вывода<br>Импортирует переменные из массива $data в шаблон<br>При передаче массива:<br>создается html представление в соответствии с первым параметром <br>и файл кэша в соответствии со вторым|
+|abstract public|<em><strong>cache</strong>( array $path   $fullPage ): ?string</em><br>Checks the cache file against the caching frequency,<br>if the cache is out of date, then it must be updated<br>The default caching interval time is specified in the configuration file<br>config/setting.local.yml for local development config/setting.production.yml for public release<br>Example: 'cache.time' => 'now',<br>The caching interval time can be passed as the second parameter $time<br>Example: '+1 day'<br>The value of $fullPage true interrupts further code processing if the data in the cache file is uptodate<br>Example: cache('index', '+1 day', true); or cache('index', null, true);<br>Проверяет файл кэша на соответствие периодичности кэширования,<br>если кеш устарел, то он должен быть обновлен<br>Время периодичности кэширования по умолчанию указывается в файле конфигурации <br>config/setting.local.yml для локальной разработки config/setting.production.yml для публичного размещения<br>Пример: 'cache.time' => 'now', <br>Время периодичности кэширования можно передать вторым элементом массива $path[1]<br>Пример: '+1 day'<br>Значение $fullPage true прерывает дальнейшую обработку кода в случае актуальности данных в файле кэша<br>Пример: cache(['index', '+1 day'], true); или cache(['index'], true); // времяиз конфигурвции|
+|abstract public|<em><strong>rudra</strong>(): Rudra\Container\Interfaces\RudraInterface</em><br>Service and Configuration Container<br>Контейнер сервисов и конфигураций|
+<hr>
 
+###### created with [Rudra-Markdown](#https://github.com/Jagepard/Rudra-Markdown)

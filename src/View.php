@@ -43,6 +43,11 @@ class View implements ViewInterface
     private string $extension;
 
     /**
+     * @var string
+     */
+    private string $basePath;
+
+    /**
      * Setup basic parameters
      * -----------------------------
      * Установка основных параметров

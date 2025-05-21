@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Interfaces\RudraInterface;
 use Rudra\Container\Traits\SetRudraContainersTrait;
 
-class View implements RudraInterface
+class View implements ViewInterface
 {
     use SetRudraContainersTrait;
 

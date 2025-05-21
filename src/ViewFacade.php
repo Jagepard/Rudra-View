@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 /**
- * @author    : Jagepard <jagepard@yandex.ru">
- * @license   https://mit-license.org/ MIT
+ * @author  : Jagepard <jagepard@yandex.ru>
+ * @license https://mit-license.org/  MIT
  */
 
 namespace Rudra\View;
@@ -12,9 +12,9 @@ namespace Rudra\View;
 use Rudra\Container\Traits\FacadeTrait;
 
 /**
- * @method static void setup(string $basePath, string $viewPath, ?string $cachePath, string $extension = "phtml")
- * @method static string view($path, array $data = [])
- * @method static cache(array $path, $fullPage = true)
+ * @method static void setup(string $viewPath, string $prefix = '', string $extension = 'phtml')
+ * @method static string|false view($path, array $data = [])
+ * @method static cache(array $path, $fullPage = false)
  *
  * @see View
  */
@@ -23,13 +23,10 @@ final class ViewFacade
     use FacadeTrait;
 
     /**
-     * Displays template
-     * -----------------
-     * Отображает шаблон
+     * Renders and outputs a template directly.
      *
-     * @param  [type] $path
-     * @param  array  $data
-     * @return void
+     * @param string|array $path
+     * @param array        $data
      */
     public static function render($path, array $data = []): void
     {

@@ -9,12 +9,8 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
-use Rudra\Container\Traits\SetRudraContainersTrait;
-
 class View implements ViewInterface
 {
-    use SetRudraContainersTrait;
-
     private string $prefix;
     private string $viewPath;
     private string $cachePath;

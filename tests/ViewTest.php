@@ -22,7 +22,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
         Rudra::binding([RudraInterface::class => Rudra::run()]);
         Rudra::services([View::class => View::class]);
 
-        View::setup(dirname(__DIR__) . '/', "app/resources/tmpl");
+        View::setup(dirname(__DIR__) . '/'. "app/resources/tmpl");
     }
 
     /**

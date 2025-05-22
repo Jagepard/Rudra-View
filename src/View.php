@@ -82,7 +82,7 @@ class View implements ViewInterface
     public function cache(array $path, $fullPage = false): ?string
     {
         $cachePath = $this->cachePath . '/' . $this->prefix . str_replace('.', '/', $path[0]) . '.' . $this->extension;
-        $cacheTime = $path[1] ?? $this->rudra()?->config()?->get('cache.time');
+        $cacheTime = $path[1] ?? config('cache.time', 'templates');
 
         if (file_exists($cachePath)) {
             $cacheLifetime = strtotime((string) $cacheTime, filemtime($cachePath));

@@ -44,11 +44,4 @@ interface ViewInterface
      * @return string|null
      */
     public function cache(array $path, $fullPage = false): ?string;
-
-    /**
-     * Returns the service and configuration container.
-     *
-     * @return RudraInterface
-     */
-    public function rudra(): RudraInterface;
 }

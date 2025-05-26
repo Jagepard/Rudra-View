@@ -26,7 +26,7 @@ class View implements ViewInterface
     public function setup(string $viewPath, string $prefix = '', string $extension = 'phtml'): void
     {
         if (!is_dir($viewPath)) {
-            throw new \InvalidArgumentException("Директория шаблонов не существует: {$viewPath}");
+            throw new \InvalidArgumentException("The template directory does not exist: {$viewPath}");
         }
 
         $this->viewPath  = rtrim($viewPath, '/\\');

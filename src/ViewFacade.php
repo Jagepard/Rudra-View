@@ -23,10 +23,17 @@ final class ViewFacade
     use FacadeTrait;
 
     /**
-     * Renders and outputs a template directly.
-     *
-     * @param string|array $path
-     * @param array        $data
+     * Renders and outputs a template directly to the output buffer.
+     * 
+     * This method delegates the rendering logic to the `view` method and outputs the result directly.
+     * It supports both single paths and arrays for specifying the template to render.
+     * 
+     * @param string|array $path The template path or an array containing:
+     *                           - The primary template path to render.
+     *                           - (Optional) A cache key for storing the rendered output.
+     * @param array        $data An associative array of data to be passed to the template for rendering.
+     * 
+     * @return void
      */
     public static function render($path, array $data = []): void
     {

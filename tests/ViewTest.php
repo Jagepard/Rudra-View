@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Rudra\View\Tests;
 
-use Rudra\Container\{Container, Facades\Rudra, Interfaces\RudraInterface};
 use Rudra\View\ViewFacade as View;
 use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
+use Rudra\Container\{Container, Facades\Rudra, Interfaces\RudraInterface};
 
 class ViewTest extends PHPUnit_Framework_TestCase
 {

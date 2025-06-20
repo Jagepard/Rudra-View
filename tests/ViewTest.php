@@ -37,12 +37,5 @@ class ViewTest extends TestCase
     public function testCache()
     {
         $this->assertEquals('"Hello World!!!"', cache(['index_cache', '+1 day']));
-
-        echo View::view(["layout", "page_{$slug}"], [
-            'content' => View::cache(['index_cache', '+1 day']) ?? View::view(['index', 'index_cache'], [
-                'foo' => 'foo',
-                'bar' => 'bar'
-            ]),
-        ]);
     }
 }

@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Rudra\View;
 
+use Rudra\Exceptions\RuntimeException;
+
 class View implements ViewInterface
 {
     private string $prefix;
@@ -16,24 +18,43 @@ class View implements ViewInterface
     private string $cachePath;
     private string $extension;
 
+    /**
+     * Sets the path to the folder with templates, prefix, and template file extension
+     * -------------------------------------------------------------------------------
+     * Устанавливает путь к папке с шаблонами, префикс и расширение файла шаблонов
+     * 
+     * @param  string $viewPath
+     * @param  string $prefix
+     * @param  string $extension
+     * @return void
+     */
     public function setup(string $viewPath, string $prefix = '', string $extension = 'phtml'): void
     {
         if (!is_dir($viewPath)) {
-            throw new \InvalidArgumentException("The template directory does not exist: {$viewPath}");
+            throw new RuntimeException("The template directory does not exist: {$viewPath}");
         }
 
-        $this->viewPath  = rtrim($viewPath, '/\\');
-        $this->prefix    = $prefix;
+        $this->viewPath = rtrim($viewPath, '/\\');
+        $this->prefix = $prefix;
         $this->extension = ltrim($extension, '.');
 
         $basePath = dirname(__DIR__, 4);
-        $this->cachePath = $basePath . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'templates';
+        $this->cachePath = $basePath . '/app/cache/templates';
 
         if (!is_dir($this->cachePath)) {
             mkdir($this->cachePath, 0777, true);
         }
     }
 
+    /**
+     * Renders a view template or caches it if path is an array.
+     * ---------------------------------------------------------
+     * Отображает шаблон или кэширует его, если путь является массивом.
+     *
+     * @param               $path
+     * @param  array        $data
+     * @return string|false
+     */
     public function view($path, array $data = []): string|false
     {
         if (is_array($path)) {
@@ -48,12 +69,26 @@ class View implements ViewInterface
 
         ob_start();
 
-        if (!empty($data)) extract($data, EXTR_REFS);
-        if (file_exists($fullPath)) require $fullPath;
+        if (!empty($data)) { 
+            extract($data, EXTR_REFS);
+        }
+
+        if (file_exists($fullPath)) {
+            require $fullPath;
+        }
 
         return ob_get_clean();
     }
 
+    /**
+     * Caches the template
+     * -------------------
+     * Кэширует шаблон
+     *
+     * @param  array       $path
+     * @param  boolean     $fullPage
+     * @return string|null
+     */
     public function cache(array $path, $fullPage = false): ?string
     {
         $cachePath = $this->cachePath . '/' . $this->prefix . str_replace('.', '/', $path[0]) . '.' . $this->extension;

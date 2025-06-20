@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Rudra\View\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Rudra\View\ViewFacade as View;
-use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 use Rudra\Container\{Container, Facades\Rudra, Interfaces\RudraInterface};
 
-class ViewTest extends PHPUnit_Framework_TestCase
+class ViewTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -30,7 +30,19 @@ class ViewTest extends PHPUnit_Framework_TestCase
      */
     public function testView()
     {
-        $this->assertEquals('"Hello World!!!"', View::view("index", ["name" => "World"]));
-        $this->assertEquals('"Hello John!!!"', View::view("index", ["name" => "John"]));
+        $this->assertEquals('"Hello World!!!"', view(['index', 'index_cache'], ["name" => "World"]));
+        $this->assertEquals('"Hello John!!!"', view("index", ["name" => "John"]));
+    }
+
+    public function testCache()
+    {
+        $this->assertEquals('"Hello World!!!"', cache(['index_cache', '+1 day']));
+
+        echo View::view(["layout", "page_{$slug}"], [
+            'content' => View::cache(['index_cache', '+1 day']) ?? View::view(['index', 'index_cache'], [
+                'foo' => 'foo',
+                'bar' => 'bar'
+            ]),
+        ]);
     }
 }

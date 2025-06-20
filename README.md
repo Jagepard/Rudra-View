@@ -10,7 +10,6 @@
 ```
 composer require rudra/view
 ```
-
 ### Using facade / Используя фасад
 ```php
 use Rudra\View\ViewFacade as View;
@@ -62,10 +61,5 @@ data([
     ]),
 ]);
 
-cache(["mainpage", "+1 day"]) ?? render(["layout", "mainpage"], [
-    'content' => cache(["page_{$slug}", "+1 day"]) ?? view('page', [
-        'foo' => 'foo',
-        'bar' => 'bar'
-    ]),
-);
+cache(["mainpage", "+1 day"]) ?? render(["layout", "mainpage"], data()));
 ```

@@ -25,7 +25,7 @@ echo View::view("layout", [
 ```php
 use Rudra\View\ViewFacade as View;
 
-echo View::cache(['mainpage', "+1 day"]) ?? View::view(["layout", "mainpage"], [
+echo View::cache(['mainpage', "+1 day"]) ?? View::render(["layout", "mainpage"], [
     'content' => View::cache(["page_{$slug}", "+1 day"]) ?? View::view(["page", "page_{$slug}"], [
         'foo' => 'foo',
         'bar' => 'bar'

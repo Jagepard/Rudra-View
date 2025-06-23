@@ -13,8 +13,8 @@ use Rudra\Container\Traits\FacadeTrait;
 
 /**
  * @method static void setup(string $viewPath, string $prefix = '', string $extension = 'phtml')
- * @method static string|false view($path, array $data = [])
- * @method static cache(array $path, $fullPage = false)
+ * @method static string|false view(string|array $path, array $data = [])
+ * @method static cache(array $path, bool $fullPage = false)
  *
  * @see View
  */
@@ -27,7 +27,7 @@ final class ViewFacade
      * --------------------------------------------------------------------------------
      * Рендерит шаблон по указанному пути и выводит результат на экран.
      */
-    public static function render($path, array $data = []): void
+    public static function render(string|array $path, array $data = []): void
     {
         echo self::view($path, $data);
     }

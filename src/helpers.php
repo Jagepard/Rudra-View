@@ -10,21 +10,21 @@ declare(strict_types=1);
 use Rudra\View\ViewFacade as View;
 
 if (!function_exists('view')) {
-    function view($path, array $data = []): string
+    function view(string|array $path, array $data = []): string
     {
         return View::view($path, $data);
     }
 }
 
 if (!function_exists('render')) {
-    function render($path, array $data = []): void
+    function render(string|array $path, array $data = []): void
     {
         echo View::view($path, $data);
     }
 }
 
 if (!function_exists('cache')) {
-    function cache(array $path, $fullPage = false): ?string
+    function cache(array $path, bool $fullPage = false): ?string
     {
         return View::cache($path, $fullPage);
     }

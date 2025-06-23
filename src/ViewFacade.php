@@ -22,6 +22,11 @@ final class ViewFacade
 {
     use FacadeTrait;
 
+    /**
+     * Renders the template at the specified path and outputs the result to the screen.
+     * --------------------------------------------------------------------------------
+     * Рендерит шаблон по указанному пути и выводит результат на экран.
+     */
     public static function render($path, array $data = []): void
     {
         echo self::view($path, $data);

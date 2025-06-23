@@ -54,7 +54,7 @@ class View implements ViewInterface
      * Если $path — массив, первый элемент используется как путь к шаблону,
      * второй — как имя для сохранения результата в кэш.
      */
-    public function view($path, array $data = []): string|false
+    public function view(string|array $path, array $data = []): string|false
     {
         if (is_array($path)) {
             $output = $this->view($path[0], $data);
@@ -86,7 +86,7 @@ class View implements ViewInterface
      * Проверяет кэш по указанному пути и возвращает сохранённое содержимое, если оно актуально.
      * Если кэш устарел или отсутствует, возвращает null.
      */
-    public function cache(array $path, $fullPage = false): ?string
+    public function cache(array $path, bool $fullPage = false): ?string
     {
         $cachePath = $this->cachePath . '/' . $this->prefix . str_replace('.', '/', $path[0]) . '.' . $this->extension;
         $cacheTime = $path[1] ?? config('cache.time', 'templates');

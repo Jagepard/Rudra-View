@@ -17,10 +17,15 @@ interface ViewInterface
      * Configures paths for working with templates and caching.
      * Checks the existence of the template directory, sets basic parameters,
      * and also creates a directory for the cache if it does not exist.
-     * -------------------------------------------------------------------------------
+     * ----------------------------------------------------------------
      * Настраивает пути для работы с шаблонами и кэшированием.
      * Проверяет существование директории шаблонов, устанавливает базовые параметры,
      * а также создаёт директорию для кэша, если она не существует.
+     *
+     * @param string $viewPath
+     * @param string $prefix
+     * @param string $extension
+     * @return void
      */
     public function setup(string $viewPath, string $prefix = '', string $extension = 'phtml'): void;
 
@@ -32,6 +37,10 @@ interface ViewInterface
      * Рендерит вид (шаблон) по указанному пути, подставляя переданные данные.
      * Если $path — массив, первый элемент используется как путь к шаблону,
      * второй — как имя для сохранения результата в кэш.
+     *
+     * @param string|array $path
+     * @param array $data
+     * @return string|false
      */
     public function view(string|array $path, array $data = []): string|false;
 
@@ -41,6 +50,10 @@ interface ViewInterface
      * --------------------------------------------------
      * Проверяет кэш по указанному пути и возвращает сохранённое содержимое, если оно актуально.
      * Если кэш устарел или отсутствует, возвращает null.
+     * 
+     * @param array $path
+     * @param boolean $fullPage
+     * @return string|null
      */
     public function cache(array $path, bool $fullPage = false): ?string;
 }

@@ -14,7 +14,7 @@ use Rudra\Container\Traits\FacadeTrait;
 /**
  * @method static void setup(string $viewPath, string $prefix = '', string $extension = 'phtml')
  * @method static string|false view(string|array $path, array $data = [])
- * @method static cache(array $path, bool $fullPage = false)
+ * @method static ?string cache(array $path, bool $fullPage = false)
  *
  * @see View
  */
@@ -26,6 +26,10 @@ final class ViewFacade
      * Renders the template at the specified path and outputs the result to the screen.
      * --------------------------------------------------------------------------------
      * Рендерит шаблон по указанному пути и выводит результат на экран.
+     *
+     * @param string|array $path
+     * @param array $data
+     * @return void
      */
     public static function render(string|array $path, array $data = []): void
     {

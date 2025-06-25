@@ -24,7 +24,7 @@ final class ViewFacade
 
     /**
      * Renders the template at the specified path and outputs the result to the screen.
-     * --------------------------------------------------------------------------------
+     * --------------------
      * Рендерит шаблон по указанному пути и выводит результат на экран.
      *
      * @param string|array $path

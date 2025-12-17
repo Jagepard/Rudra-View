@@ -63,3 +63,61 @@ data([
 
 cache(["mainpage", "+1 day"]) ?? render(["layout", "mainpage"], data()));
 ```
+
+### Добавление Twig
+```
+composer require "twig/twig:^3.0"
+```
+Создаем фабрику
+```php
+<?php
+
+namespace App\Containers\Web\Factory;
+
+use Rudra\View\View;
+use Rudra\View\TwigView;
+use Rudra\Container\Interfaces\FactoryInterface;
+
+class TwigFactory implements FactoryInterface
+{
+    public function create(): TwigView
+    {
+        $view = new TwigView();
+        $view->setup(
+            viewPath: dirname(dirname(__DIR__)) . '/Web/UI/tmpl',
+            prefix: '',
+            extension: 'twig'
+        );
+
+        return $view;
+    }
+}
+```
+Настраиваем сервис
+```php
+<?php
+
+use Rudra\View\View;
+use Rudra\View\TwigView;
+use App\Containers\Web\Factory\TwigFactory;
+
+return [
+    'contracts' => [
+
+    ],
+    'services'  => [
+        // View::class => function () {
+        //     $view = new TwigView();
+        //     $view->setup(
+        //         viewPath: dirname(__DIR__) . '/Web/UI/tmpl',
+        //         prefix: '',
+        //         extension: 'twig'
+        //     );
+        //     return $view;
+        // }
+        // View::class => fn() => (new TwigFactory())->create(),
+
+        View::class => TwigFactory::class,
+    ]
+];
+```

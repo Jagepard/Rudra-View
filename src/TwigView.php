@@ -42,7 +42,7 @@ class TwigView implements ViewInterface
         $this->prefix = $prefix;
 
         $basePath = dirname(__DIR__, 4);
-        $this->cachePath = $basePath . '/app/cache/twig';
+        $this->cachePath = $basePath . '/storage/cache/twig';
 
         if (!is_dir($this->cachePath)) {
             mkdir($this->cachePath, 0777, true);

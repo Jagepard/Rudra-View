@@ -43,7 +43,7 @@ class View implements ViewInterface
         $this->extension = ltrim($extension, '.');
 
         $basePath = dirname(__DIR__, 4);
-        $this->cachePath = $basePath . '/app/cache/templates';
+        $this->cachePath = $basePath . '/storage/cache/templates';
 
         if (!is_dir($this->cachePath)) {
             mkdir($this->cachePath, 0777, true);

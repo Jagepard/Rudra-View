@@ -12,7 +12,7 @@
 use Rudra\View\ViewFacade as View;
 
 if (!function_exists('view')) {
-    function view(string|array $path, array $data = []): string
+    function view(string|array $path, array $data = []): string|false
     {
         return View::view($path, $data);
     }
@@ -21,7 +21,10 @@ if (!function_exists('view')) {
 if (!function_exists('render')) {
     function render(string|array $path, array $data = []): void
     {
-        echo View::view($path, $data);
+        $content = View::view($path, $data);
+        if ($content !== false) {
+            echo $content;
+        }
     }
 }
 

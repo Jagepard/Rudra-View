@@ -15,40 +15,37 @@ use Rudra\Exceptions\RuntimeException;
 
 class View implements ViewInterface
 {
-    private string $prefix;
-    private string $viewPath;
-    private string $cachePath;
-    private string $extension;
+    private string $prefix = '';
+    private string $viewPath  = '';
+    private string $cachePath = '';
+    private string $extension = 'phtml';
 
     /**
      * Configures paths for working with templates and caching.
      * Checks the existence of the template directory, sets basic parameters,
      * and also creates a directory for the cache if it does not exist.
-     * --------------------
-     * Настраивает пути для работы с шаблонами и кэшированием.
-     * Проверяет существование директории шаблонов, устанавливает базовые параметры,
-     * а также создаёт директорию для кэша, если она не существует.
      *
-     * @param string $viewPath
-     * @param string $prefix
-     * @param string $extension
-     * @return void
+     * @throws RuntimeException
      */
+    #[\Override]
     public function setup(string $viewPath, string $prefix = '', string $extension = 'phtml'): void
     {
         if (!is_dir($viewPath)) {
             throw new RuntimeException("The template directory does not exist: {$viewPath}");
         }
 
-        $this->prefix = $prefix;
-        $this->viewPath = rtrim($viewPath, '/\\');
+        if (!is_readable($viewPath)) {
+            throw new RuntimeException("Template directory is not readable: {$viewPath}");
+        }
+
+        $this->prefix    = $prefix;
+        $this->viewPath  = rtrim($viewPath, '/\\');
         $this->extension = ltrim($extension, '.');
+        $this->cachePath = dirname(__DIR__, 4) . '/storage/cache/templates';
 
-        $basePath = dirname(__DIR__, 4);
-        $this->cachePath = $basePath . '/storage/cache/templates';
-
-        if (!is_dir($this->cachePath)) {
-            mkdir($this->cachePath, 0777, true);
+        // Safe directory creation with race condition handling
+        if (!is_dir($this->cachePath) && !mkdir($this->cachePath, 0755, true)) {
+            throw new RuntimeException("Failed to create cache directory: {$this->cachePath}");
         }
     }
 
@@ -56,20 +53,17 @@ class View implements ViewInterface
      * Renders a view (template) at the specified path, substituting the passed data.
      * If `$path` is an array, the first element is used as the path to the template,
      * and the second element is used as the name to save the result in the cache.
-     * --------------------
-     * Рендерит вид (шаблон) по указанному пути, подставляя переданные данные.
-     * Если `$path` — массив, первый элемент используется как путь к шаблону,
-     * второй — как имя для сохранения результата в кэш.
-     *
-     * @param string|array $path
-     * @param array $data
-     * @return string|false
      */
+    #[\Override]
     public function view(string|array $path, array $data = []): string|false
     {
         if (is_array($path)) {
-            $output = $this->view($path[0], $data);
+            $output    = $this->view($path[0], $data);
             $cachePath = $this->cachePath . '/' . str_replace('.', '/', $this->prefix . $path[1]) . '.' . $this->extension;
+
+            if ($output === false) {
+                return false;
+            }
 
             file_put_contents($cachePath, $output);
             return $output;
@@ -77,45 +71,56 @@ class View implements ViewInterface
 
         $fullPath = $this->viewPath . '/' . str_replace('.', '/', $path) . '.' . $this->extension;
 
+        // Check file existence BEFORE extract() to prevent variable injection
+        if (!file_exists($fullPath)) {
+            return false;
+        }
+
         ob_start();
 
-        if (!empty($data)) { 
-            extract($data, EXTR_REFS);
+        if ($data !== []) { 
+            extract($data, EXTR_SKIP);
         }
 
-        if (file_exists($fullPath)) {
-            require $fullPath;
-        }
-
+        require $fullPath;
         return ob_get_clean();
     }
 
     /**
      * Checks the cache at the specified path and returns the saved content if it is up-to-date.
      * If the cache is outdated or missing, returns null.
-     * --------------------
-     * Проверяет кэш по указанному пути и возвращает сохранённое содержимое, если оно актуально.
-     * Если кэш устарел или отсутствует, возвращает null.
-     * 
-     * @param array $path
-     * @param boolean $fullPage
-     * @return string|null
      */
+    #[\Override]
     public function cache(array $path, bool $fullPage = false): ?string
     {
-        $cachePath = $this->cachePath . '/' . $this->prefix . str_replace('.', '/', $path[0]) . '.' . $this->extension;
+        $cachePath = $this->cachePath . '/' . str_replace('.', '/', $this->prefix . $path[0]) . '.' . $this->extension;
         $cacheTime = $path[1] ?? config('cache.time', 'templates');
 
         if (file_exists($cachePath)) {
-            $cacheLifetime = strtotime((string) $cacheTime, filemtime($cachePath));
-            if ($cacheLifetime > time()) {
-                $content = file_get_contents($cachePath);
-                if ($fullPage) {
-                    echo $content;
-                    exit;
-                }
-                return $content;
+            // filemtime() returns int|false, strict comparison required
+            $filemtime = filemtime($cachePath);
+            if ($filemtime === false) {
+                return null;
             }
+            
+            // strtotime() returns int|false, must validate before comparison
+            $cacheLifetime = strtotime((string) $cacheTime, $filemtime);
+            if ($cacheLifetime === false || $cacheLifetime <= time()) {
+                return null;
+            }
+            
+            // file_get_contents() returns string|false, method signature requires ?string
+            $content = file_get_contents($cachePath);
+            if ($content === false) {
+                return null;
+            }
+            
+            if ($fullPage) {
+                echo $content;
+                exit;
+            }
+            
+            return $content;
         }
 
         return null;

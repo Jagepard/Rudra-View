@@ -6,11 +6,11 @@
 
 # Rudra-View | [API](https://github.com/Jagepard/Rudra-View/blob/master/docs.md "Documentation API")
 
-### Install / Установка
+### Install
 ```
 composer require rudra/view
 ```
-### Using facade / Используя фасад
+### Using facade
 ```php
 use Rudra\View\ViewFacade as View;
 
@@ -21,7 +21,7 @@ echo View::view("layout", [
     ]),
 ]);
 ```
-### With caching / С кешированием
+### With caching
 ```php
 use Rudra\View\ViewFacade as View;
 
@@ -32,7 +32,7 @@ echo View::cache(['mainpage', "+1 day"]) ?? View::render(["layout", "mainpage"],
     ]),
 ]);
 ```
-### Using render, view helpers / При помощи хелперов render, view
+### Using render, view helpers
 ```php
 render("layout", [
     'content' => view('page', [
@@ -41,7 +41,7 @@ render("layout", [
     ]),
 ]);
 ```
-### With setting data through the data helper / С установкой данных через хелпер data
+### With setting data through the data helper
 ```php
 data([
     'content' => view("page", [
@@ -52,23 +52,24 @@ data([
 
 render("layout", data());
 ```
-### With caching / С кешированием
+### With caching
 ```php
 data([
-    'content' => cache(["page_{$slug}", "+1 day") ?? view(["page", "page_{$slug}"], [
+    'content' => cache(["page_{$slug}", "+1 day"]) ?? view(["page", "page_{$slug}"], [
         'foo' => 'foo',
         'bar' => 'bar'
     ]),
 ]);
 
-cache(["mainpage", "+1 day"]) ?? render(["layout", "mainpage"], data()));
+cache(["mainpage", "+1 day"]) ?? render(["layout", "mainpage"], data());
 ```
 
-### Добавление Twig
-```
+### Adding Twig
+```bash
 composer require "twig/twig:^3.0"
 ```
-Создаем фабрику
+
+Create factory:
 ```php
 <?php
 
@@ -93,7 +94,7 @@ class TwigFactory implements FactoryInterface
     }
 }
 ```
-Настраиваем сервис
+Configure service:
 ```php
 <?php
 
@@ -132,13 +133,3 @@ This project is licensed under the **Mozilla Public License 2.0 (MPL-2.0)** — 
 
 📄 Full license text: [LICENSE](./LICENSE)  
 🌐 Official MPL-2.0 page: https://mozilla.org/MPL/2.0/
-
---------------------------
-Проект распространяется под лицензией **Mozilla Public License 2.0 (MPL-2.0)**. Это означает:
- - Вы можете свободно использовать, изменять и распространять код.
- - При изменении файлов, содержащих исходный код из этого репозитория, вы обязаны оставить их открытыми под той же лицензией.
- - Вы **обязаны сохранять уведомления об авторстве** и ссылку на оригинал.
- - Вы можете встраивать код в проприетарные проекты, если исходные файлы остаются под MPL.
-
-📄  Полный текст лицензии (на английском): [LICENSE](./LICENSE)  
-🌐 Официальная страница: https://mozilla.org/MPL/2.0/

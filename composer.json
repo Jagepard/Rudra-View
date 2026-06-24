@@ -22,7 +22,7 @@
         "skype": "jagepard.ru"
     },
     "require": {
-        "php": ">=8.3",
+        "php": "^8.3",
         "rudra/container": "self.version",
         "rudra/docs": "self.version",
         "rudra/exception": "self.version"

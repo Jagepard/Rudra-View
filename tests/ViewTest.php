@@ -11,7 +11,6 @@
 
 namespace Rudra\View\Tests;
 
-use Rudra\Container\Container;
 use Rudra\Container\Facades\Rudra;
 use Rudra\Container\Interfaces\RudraInterface;
 use Rudra\View\ViewFacade as View;

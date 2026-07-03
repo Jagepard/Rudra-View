@@ -11,8 +11,6 @@
 
 namespace Rudra\View;
 
-use Rudra\Container\Interfaces\RudraInterface;
-
 interface ViewInterface
 {
     public function setup(string $viewPath, string $prefix = '', string $extension = 'phtml'): void;

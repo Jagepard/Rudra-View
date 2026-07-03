@@ -26,8 +26,10 @@ class TwigView implements ViewInterface
      * Checks the existence of the template directory, sets basic parameters,
      * and initializes the Twig environment with caching enabled.
      * 
+     * @param string $extension Currently unused, reserved for future use
      * @throws RuntimeException
      */
+    #[\Override]
     public function setup(string $viewPath, string $prefix = '', string $extension = 'twig'): void
     {
         if (!is_dir($viewPath)) {
@@ -56,6 +58,7 @@ class TwigView implements ViewInterface
      * If `$path` is an array, the first element is used as the template name,
      * and the rendered result is returned (external caching may be applied if needed).
      */
+    #[\Override]
     public function view(string|array $path, array $data = []): string|false
     {
         if (is_array($path)) {
@@ -73,6 +76,7 @@ class TwigView implements ViewInterface
      * 
      * @throws RuntimeException
      */
+    #[\Override]
     public function cache(array $path, bool $fullPage = false): ?string
     {
         throw new RuntimeException('Caching via cache() is not supported in TwigView. Use HTTP-level caching instead.');

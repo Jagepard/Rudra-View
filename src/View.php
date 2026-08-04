@@ -94,7 +94,7 @@ class View implements ViewInterface
     public function cache(array $path, bool $fullPage = false): ?string
     {
         $cachePath = $this->cachePath . '/' . str_replace('.', '/', $this->prefix . $path[0]) . '.' . $this->extension;
-        $cacheTime = $path[1] ?? config('cache.time', 'templates');
+        $cacheTime = $path[1] ?? config('cache_time.templates');
 
         if (file_exists($cachePath)) {
             // filemtime() returns int|false, strict comparison required

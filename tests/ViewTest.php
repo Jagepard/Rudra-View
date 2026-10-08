@@ -23,7 +23,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         Rudra::binding([RudraInterface::class => Rudra::run()]);
         Rudra::services([View::class => View::class]);
 
-        View::setup(dirname(__DIR__) . '/'. "app/resources/tmpl");
+        View::setup(dirname(__DIR__) . '/'. 'app/resources/tmpl');
     }
 
     /**
@@ -31,8 +31,8 @@ class ViewTest extends \PHPUnit\Framework\TestCase
      */
     public function testView()
     {
-        $this->assertEquals('"Hello World!!!"', view(['index', 'index_cache'], ["name" => "World"]));
-        $this->assertEquals('"Hello John!!!"', view("index", ["name" => "John"]));
+        $this->assertEquals('"Hello World!!!"', view(['index', 'index_cache'], ['name' => 'World']));
+        $this->assertEquals('"Hello John!!!"', view('index', ['name' => 'John']));
     }
 
     public function testCache()
@@ -42,7 +42,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testNonExistentTemplateReturnsFalse()
     {
-        $result = view("non_existent_template", []);
+        $result = view('non_existent_template', []);
         $this->assertFalse($result);
     }
 
@@ -56,7 +56,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testViewWithEmptyData()
     {
-        $result = view("index", []);
+        $result = view('index', []);
         $this->assertIsString($result);
     }
 }

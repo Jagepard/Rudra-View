@@ -14,8 +14,8 @@ composer require rudra/view
 ```php
 use Rudra\View\ViewFacade as View;
 
-echo View::view("layout", [
-    'content' => View::view("page", [
+echo View::view('layout', [
+    'content' => View::view('page', [
         'foo' => 'foo',
         'bar' => 'bar'
     ]),
@@ -25,8 +25,8 @@ echo View::view("layout", [
 ```php
 use Rudra\View\ViewFacade as View;
 
-echo View::cache(['mainpage', "+1 day"]) ?? View::render(["layout", "mainpage"], [
-    'content' => View::cache(["page_{$slug}", "+1 day"]) ?? View::view(["page", "page_{$slug}"], [
+echo View::cache(['mainpage', '+1 day']) ?? View::render(['layout', 'mainpage'], [
+    'content' => View::cache(["page_{$slug}", '+1 day']) ?? View::view(['page', "page_{$slug}"], [
         'foo' => 'foo',
         'bar' => 'bar'
     ]),
@@ -34,7 +34,7 @@ echo View::cache(['mainpage', "+1 day"]) ?? View::render(["layout", "mainpage"],
 ```
 ### Using render, view helpers
 ```php
-render("layout", [
+render('layout', [
     'content' => view('page', [
         'foo' => 'foo',
         'bar' => 'bar'
@@ -44,29 +44,29 @@ render("layout", [
 ### With setting data through the data helper
 ```php
 data([
-    'content' => view("page", [
+    'content' => view('page', [
         'foo' => 'foo',
         'bar' => 'bar'
     ]),
 ]);
 
-render("layout", data());
+render('layout', data());
 ```
 ### With caching
 ```php
 data([
-    'content' => cache(["page_{$slug}", "+1 day"]) ?? view(["page", "page_{$slug}"], [
+    'content' => cache(["page_{$slug}", '+1 day']) ?? view(['page', "page_{$slug}"], [
         'foo' => 'foo',
         'bar' => 'bar'
     ]),
 ]);
 
-cache(["mainpage", "+1 day"]) ?? render(["layout", "mainpage"], data());
+cache(['mainpage', '+1 day']) ?? render(['layout', 'mainpage'], data());
 ```
 
 ### Adding Twig
 ```bash
-composer require "twig/twig:^3.0"
+composer require 'twig/twig:^3.0'
 ```
 
 Create factory:
